@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Version</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Function to get the loader from the URL
+        function getLoader() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('loader');
+        }
+
+        function disableOtherDropdowns(selectedDropdown) {
+            const dropdowns = document.querySelectorAll('select[id$="Select"]');
+            dropdowns.forEach(dropdown => {
+                if (dropdown !== selectedDropdown) {
+                    dropdown.disabled = selectedDropdown.value !== "";
+                }
+            });
+        }
+
+        function showRamOptions() {
+            document.getElementById('ramOptions').style.display = 'block';
+        }
+
+        function downloadServer() {
+            const selectedDropdown = document.querySelector('select[id$="Select"]:not([disabled])');
+            const selectedSubVersion = selectedDropdown.value;
+            const selectedRam = document.querySelector('input[name="ram"]:checked').value;
+
+            // Get the loader from the URL
+            const loader = getLoader();
+            const downloadLink = `http://cookie-database.ddns.net/server-creator/${loader}/${selectedSubVersion}/${selectedRam}.zip`;
+            window.location.href = downloadLink;
+        }
+    </script>
+</head>
+<body>
+    <h1>Select Version</h1>
+    <div>
+        <label for="1.21Select">Version 1.21:</label>
+        <select id="1.21Select" onchange="disableOtherDropdowns(this); showRamOptions()">
+            <option value="">Select Version</option>
+            <option value="1.21">1.21</option>
+            <option value="1.21.1">1.21.1</option>
+            <option value="1.21.2">1.21.2</option>
+            <option value="1.21.3">1.21.3</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="1.20Select">Version 1.20:</label>
+        <select id="1.20Select" onchange="disableOtherDropdowns(this); showRamOptions()">
+            <option value="">Select Version</option>
+            <option value="1.20">1.20</option>
+            <option value="1. 20.1">1.20.1</option>
+            <option value="1.20.2">1.20.2</option>
+            <option value="1.20.3">1.20.3</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="1.19Select">Version 1.19:</label>
+        <select id="1.19Select" onchange="disableOtherDropdowns(this); showRamOptions()">
+            <option value="">Select Version</option>
+            <option value="1.19">1.19</option>
+            <option value="1.19.1">1.19.1</option>
+            <option value="1.19.2">1.19.2</option>
+            <option value="1.19.3">1.19.3</option>
+        </select>
+    </div>
+
+    <div id="ramOptions" style="display:none;">
+        <h2>Select RAM</h2>
+        <label><input type="radio" name="ram" value="2GB" required> 2GB RAM</label><br>
+        <label><input type="radio" name="ram" value="4GB"> 4GB RAM</label><br>
+        <label><input type="radio" name="ram" value="6GB"> 6GB RAM</label><br>
+        <label><input type="radio" name="ram" value="8GB"> 8GB RAM</label><br>
+        <label><input type="radio" name="ram" value="12GB"> 12GB RAM</label><br>
+        <button onclick="downloadServer()">Download Server</button>
+    </div>
+</body>
+</html>
