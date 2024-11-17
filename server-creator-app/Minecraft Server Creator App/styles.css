@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: #ffffff;
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0; /* Remove default margin */
+    text-align: center; /* Center text within elements */
+}
+
+h1, h2, label, button {
+    margin: 10px; /* Optional spacing between elements */
+    color: #ffffff;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+select {
+    margin: 10px 5px;
+    padding: 10px;
+    background-color: #333;
+    color: #ffffff;
+    border: 1px solid #555;
+}
+
+label {
+    color: #ffffff;
+}
+
+#ramOptions {
+    margin-top: 20px;
+}
