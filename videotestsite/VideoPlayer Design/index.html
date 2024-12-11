@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Video Player</title>
+    <style>
+        #video-player {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            position: relative;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 0 0 10px 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="video-player">
+    <!-- Video player with OneDrive video link -->
+    <video id="my-video" controls>
+        <source src="https://minedusci-my.sharepoint.com/personal/db25869937_edu_mon_bg/_layouts/15/download.aspx?share=EXKrQhVua8ZNl1ONmiO2MNgBu-eEX-Ul_TIAfQE6TeOhJQ&download=1" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="controls">
+        <span>Custom Video Player Controls Here</span>
+    </div>
+</div>
+
+</body>
+</html>
