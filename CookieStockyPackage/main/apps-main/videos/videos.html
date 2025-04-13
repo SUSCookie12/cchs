@@ -1,0 +1,555 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+    CookieMovie - 📺Videos
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            overflow-x: hidden; /* Hides horizontal scrollbar */
+            touch-action: pan-y; /* Prevent horizontal touch scrolling */
+            font-family: 'Roboto', sans-serif;
+        }
+    .video-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .video-popup iframe {
+        width: 80%;
+        height: 80%;
+    }
+    .video-popup .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 50%;
+    }
+    .trending-title {
+        color: #FFD700;
+        text-shadow: 0 0 10px #FFD700;
+    }
+    .trending-thumbnail {
+        filter: brightness(0.7);
+    }
+    .notification-popup {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 50;
+        width: 300px;
+        background: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .notification-popup ul {
+        list-style: none;
+        padding: 10px;
+    }
+    .notification-popup ul li {
+        padding: 10px;
+        border-bottom: 1px solid #ffffff;
+        color: #cbd5e0;
+    }
+    .notification-popup ul li:last-child {
+        border-bottom: none;
+    }
+    .notification-popup .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 50%;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #1c1c1c;
+        }
+        .mobile-header .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: #1c1c1c;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+        .mobile-menu a {
+            padding: 10px;
+            color: #cbd5e0;
+            text-decoration: none;
+        }
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+        }
+    }
+  </style>
+ </head>
+ <body class="bg-[#2e2e2e] text-white">
+  <div class="flex flex-col">
+   <!-- Mobile Header -->
+   <div class="mobile-header w-full p-5 md:hidden">
+    <div class="menu-icon" id="menuIcon">
+     <i class="fas fa-bars">
+     </i>
+    </div>
+    <button id="notificationButton" class="relative">
+        <i class="fas fa-bell text-gray-400">
+        </i>
+       </button>
+    <div class="flex items-center text-xl font-bold">
+        CookieMovie
+        <div class="bg-green-500 p-2 rounded-full ml-2">
+            <i class="fas fa-cookie text-white"></i>
+        </div>
+    </div>
+   </div>
+   </div>
+   <div class="mobile-menu md:hidden" id="mobileMenu">
+    <div class="flex items-center text-xl font-bold mb-4"> <!-- Added mb-4 for spacing below -->
+        <button class="bg-white rounded-full p-2 mr-2" id="closeMobileMenu">
+            <i class="fas fa-times text-black"></i>
+        </button>
+        <div class="bg-green-500 p-2 rounded-full mr-2">
+            <i class="fas fa-cookie text-white"></i>
+        </div>
+        CookieMovie
+    </div>
+    <a href="index.html" class="text-green-500 font-bold">
+        Home
+    </a>
+    <a href="videos.html" class="text-green-500 font-bold">
+        Collection
+    </a>
+    <a href="lib.html" class="text-green-500 font-bold">
+        🔒Library
+    </a>
+    <a href="notes.html" class="text-green-500 font-bold">
+        Notes
+    </a>
+    <div style="height: 2px; background-color: #ffffff; width: 86%; margin: 20px 0;"></div>
+    <a href="#">
+     Coming Soon
+    </a>
+    <a href="#">
+     Development Version: 3.7.7.7
+    </a>
+   </div>
+   <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-1/5 bg-[1c1c1c] h-screen p-5 sidebar">
+     <div class="flex items-center mb-10">
+      <div class="bg-green-500 p-2 rounded-full">
+       <i class="fas fa-cookie text-white">
+       </i>
+      </div>
+      <span class="ml-3 text-xl font-bold">
+       CookieMovie
+      </span>
+     </div>
+     <nav>
+      <ul class="space-y-4">
+        <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='index.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-home"></i>
+            <span class="ml-3">Home</span>
+        </li>
+        <li class="flex items-center text-green-400 cursor-pointer mb-4" onclick="window.location.href='videos.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-video"></i>
+            <span class="ml-3">Collection</span>
+        </li>
+        <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='lib.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-book"></i>
+            <span class="ml-3">🔒Library</span>
+        </li>
+           <hr class="border-gray-600"/>
+           <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='notes.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-sticky-note"></i>
+            <span class="ml-3">Notes</span>
+        </li>
+        <hr class="border-gray-600"/>
+       <li class="flex items-center text-gray-400 cursor-pointer">
+        <i class="fas fa-clock">
+        </i>
+        <span class="ml-3">
+         Coming Soon
+        </span>
+       </li>
+      </ul>
+     </nav>
+     <div class="mt-10">
+      <ul class="space-y-4">
+       <li class="flex items-center text-gray-400 cursor-pointer">
+        <i class="fas fa-question-circle">
+        </i>
+        <span class="ml-3">
+         Development Version: 3.7.7.7
+        </span>
+       </li>
+      </ul>
+     </div>
+     <li class="space-y-4 text-[1c1c1c]"></li>
+     <hr class="border-gray-600"/>
+     <div style="margin-top: 20px;">
+        This Site is still in development
+        and not 100% completed, so not all
+        videos are in collection. We are
+        still working on this project and
+        will add more videos in the future.
+        Thank you for your patience and
+        understanding. If you have any
+        suggestions or ideas, please let
+        us know in Discord or by the
+        support page.
+     </div>
+    </div>
+    <!-- Main Content -->
+    <div class="w-full md:w-4/5 p-5">
+     <div class="flex justify-between items-center mb-5">
+      <div>
+        <button class="text-gray-400 mr-5" onclick="window.location.href='index.html'">
+            Home
+           </button>
+       <button class="text-[#84e9f0] font-bold mr-5">
+        Videos
+       </button>
+       <button class="text-gray-400" onclick="window.location.href='lib.html'">
+        |🔒Library|
+       </button>
+      </div>
+      <div class="flex items-center relative">
+        <div class="relative">
+         <input class="bg-[#292929] text-white rounded-full pl-10 pr-4 py-2" placeholder="Search" type="text" id="searchInput"/>
+         <i class="fas fa-search absolute left-3 top-2.5 text-[fffff]">
+         </i>
+        </div>
+       <div class="ml-5 relative">
+        <button id="notificationButton1" class="relative">
+            <i class="fas fa-bell text-gray-400">
+            </i>
+           </button>
+        <div class="notification-popup" id="notificationPopup">
+        <button class="close-btn" id="closeNotificationPopup">
+            <i class="fas fa-times text-black"></i>
+        </button>
+         <ul>
+          <li>
+            🌑New Dark interface🕶️
+          </li>
+          <li>
+            📱Resposive Mobile Version of the site📱
+          </li>
+          <li>
+            📺New uploaded videos📺
+          </li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="border-b-2 border-[262626] mb-6"></div>
+     <div class="flex">
+      <div class="w-full md:w-3/4 pr-5">
+       <h2 class="text-2xl font-bold mb-5">
+        Collection
+    </h2>
+    <div class="grid grid-cols-3 gap-4">
+      
+        <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="How to Make a Website with HTML and CSS - Beginner Tutorial" data-video="https://www.youtube.com/embed/CgHgqZW4mfc" style="width: 240px; height: 135px;">
+            <div class="absolute inset-0">
+                <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/CgHgqZW4mfc/hqdefault.jpg"/>
+            </div>
+            <div class="absolute bottom-2 left-2">
+                <h3 class="text-sm font-bold" style="color: #33ff33;"> <!-- Change #FF5733 to your desired color -->
+                    Завръщаме Fortnite УДЪРНО! Marvel Season is Back
+                </h3>
+            </div>
+        </div>
+     <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="CookieStocky Radio Special Song" data-video="https://www.youtube.com/embed/sCJ7_qgn46M" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/sCJ7_qgn46M/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                CookieStocky Radio Special Song
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="CookieTime по CookieStocky Radio! - CookieStocky Creative" data-video="https://www.youtube.com/embed/Xi3X7ifOr28" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/Xi3X7ifOr28/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                CookieTime по CookieStocky Radio! - CookieStocky Creative
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Танцът на Живота - CookieStocky Radio Official" data-video="https://www.youtube.com/embed/ZubRAid424M" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/ZubRAid424M/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Танцът на Живота - CookieStocky Radio Official
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="How to download my app | CookieStocky App😁" data-video="https://www.youtube.com/embed/OnuhzRfeg3M" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/OnuhzRfeg3M/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                How to download my app | CookieStocky App😁
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="BIZS S2 | Ще има ли нови клипове? |Minecraft 1.21 с ‪@ValorFox‬ | Епизод 1" data-video="https://www.youtube.com/embed/6v3M0tRV_PI" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/6v3M0tRV_PI/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                BIZS S2 | Ще има ли нови клипове? |Minecraft 1.21 с ‪@ValorFox‬ | Епизод 1
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Minecraft 1.21 Е Вече Тук!!😮 Топ 10 Факта за Новата Версия" data-video="https://www.youtube.com/embed/N-mjZX43DeI" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/N-mjZX43DeI/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Minecraft 1.21 Е Вече Тук!!😮 Топ 10 Факта за Новата Версия
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="How to convert any site to app with Google Chrome" data-video="https://www.youtube.com/embed/MD-B_j9SYfs" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/MD-B_j9SYfs/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                How to convert any site to app with Google Chrome
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="How to make smooth keyframes in CapCut" data-video="https://www.youtube.com/embed/jusZkkk5H04" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/jusZkkk5H04/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                How to make smooth keyframes in CapCut
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Brawl Stars | Еп.3 | 😮Взех Най - Редкият Скин😮👀" data-video="https://www.youtube.com/embed/yQpU2ZYENfY" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/yQpU2ZYENfY/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Brawl Stars | Еп.3 | 😮Взех Най - Редкият Скин😮👀
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="😮Phasmophobia Еп.1 |!!!Дух печели 2VS1!!!|😮" data-video="https://www.youtube.com/embed/NAktVKUP5G8" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/NAktVKUP5G8/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                😮Phasmophobia Еп.1 |!!!Дух печели 2VS1!!!|😮
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Kill compilation Еп.1 | ValorantBG Gameplay" data-video="https://www.youtube.com/embed/89FIoG9DksE" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/89FIoG9DksE/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Kill compilation Еп.1 | ValorantBG Gameplay
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="😮Valorant се завръща! Еп.5" data-video="https://www.youtube.com/embed/MG9pk_tax2g" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/MG9pk_tax2g/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                😮Valorant се завръща! Еп.5
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Добавете Resource Pack към вашия Minecraft сървър! (Tutorial)" data-video="https://www.youtube.com/embed/2NyZkprtDkc" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/2NyZkprtDkc/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Добавете Resource Pack към вашия Minecraft сървър! (Tutorial)
+            </h3>
+        </div>
+    </div>
+    <div class="bg-gray-700 rounded-lg relative video-item cursor-pointer" data-title="Как да си направим сървър на Aternos? (Tutorial)" data-video="https://www.youtube.com/embed/MX02KwQTkfs" style="width: 240px; height: 135px;">
+        <div class="absolute inset-0">
+            <img alt="Thumbnail" class="rounded-lg w-full h-full object-cover" src="https://img.youtube.com/vi/MX02KwQTkfs/hqdefault.jpg"/>
+        </div>
+        <div class="absolute bottom-2 left-2">
+            <h3 class="text-sm font-bold" style="color: #33ff33;">
+                Как да си направим сървър на Aternos? (Tutorial)
+            </h3>
+        </div>
+    </div>
+
+
+
+    </div>
+   </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="video-popup flex" style="display: none;">
+    <button class="close-btn">
+        <i class="fas fa-times text-black"></i>
+    </button>
+   <iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+   </iframe>
+  </div>
+  <script>
+   document.getElementById('searchInput').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        const videoItems = document.querySelectorAll('.video-item');
+        
+        videoItems.forEach(function(item) {
+            const title = item.getAttribute('data-title').toLowerCase();
+            if (title.includes(searchQuery)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    document.querySelectorAll('.video-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const videoUrl = this.getAttribute('data-video');
+            const popup = document.querySelector('.video-popup');
+            const iframe = popup.querySelector('iframe');
+            iframe.src = videoUrl;
+            popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelectorAll('.watch-now-btn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const videoUrl = this.getAttribute('data-video');
+            const popup = document.querySelector('.video-popup');
+            const iframe = popup.querySelector('iframe');
+            iframe.src = videoUrl;
+            popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelector('.video-popup .close-btn').addEventListener('click', function() {
+        const popup = document.querySelector('.video-popup');
+        const iframe = popup.querySelector('iframe');
+        iframe.src = '';
+        popup.style.display = 'none';
+    });
+
+    document.getElementById('notificationButton').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        if (notificationPopup.style.display === 'none' || notificationPopup.style.display === '') {
+            notificationPopup.style.display = 'block';
+        } else {
+            notificationPopup.style.display = 'none';
+        }
+    });
+
+    document.getElementById('notificationButton1').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        if (notificationPopup.style.display === 'none' || notificationPopup.style.display === '') {
+            notificationPopup.style.display = 'block';
+        } else {
+            notificationPopup.style.display = 'none';
+        }
+    });
+
+    document.getElementById('closeNotificationPopup').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        notificationPopup.style.display = 'none';
+    });
+
+    document.getElementById('menuIcon').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
+            mobileMenu.style.display = 'flex';
+        } else {
+            mobileMenu.style.display = 'none';
+        }
+    });
+
+    document.getElementById('closeMobileMenu').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.style.display = 'none';
+    });
+  </script>
+ </body>
+</html>
