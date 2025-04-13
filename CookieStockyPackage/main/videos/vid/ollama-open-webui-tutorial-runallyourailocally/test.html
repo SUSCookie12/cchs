@@ -1,0 +1,587 @@
+<html lang="en"><head><style>body {transition: opacity ease-in 0.2s; } 
+    body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+    </style>
+      
+        <title>How to Clone a Voice (Open-Source) :: Terminal</title>
+      
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Here is the video: https://youtu.be/3fg7Ht0DSnE?si=gyqIdakpKI0Qf1Fy
+    What the junk is this? This is the 3rd video in my Home Assistant series. This video picks up where I left off (and where I failed) in my last video attempting to replace Alexa with my own, fully local, AI voice assistant. I did everything but create a custom AI voice, specifically the voice of Terry Crews. In this video, I FINALLY figured out a consistent way to clone a voice from pretty much any source. But it has to be LOCAL and FREE. You can clone my voice I am giving you permission to clone my voice…but not for commercial purposes or for content creation. You are only allowed to use my voice as your personal voice assistant. If you would like to clone my voice, here is the voice dataset: https://drive.google.com/drive/folders/1i6mWm8z2K_3rtanrVn1UcNgw5LQ0Zyv6?usp=sharing What Do You Need? …just a computer. But if you have a GPU….better.
+    ">
+    <meta name="keywords" content="">
+    
+      <meta name="robots" content="noodp">
+    
+    <link rel="canonical" href="/posts/how-to-clone-a-voice/">
+    
+    
+    
+    
+    
+      
+      <link rel="stylesheet" href="/css/buttons.min.2bc533403a27dfe0e93105a92502b42ce4587e2e4a87d9f7d349e51e16e09478.css">
+    
+      
+      <link rel="stylesheet" href="/css/code.min.00125962708925857e7b66dbc58391d55be1191a3d0ce2034de8c9cd2c481c36.css">
+    
+      
+      <link rel="stylesheet" href="/css/fonts.min.4881f0c525f3ce2a1864fb6e96676396cebe1e6fcef1933e8e1dde7041004fb5.css">
+    
+      
+      <link rel="stylesheet" href="/css/footer.min.2e3eb191baee58dd05a9f0104ac1fab0827bca7c64dafe0b2579f934c33a1d69.css">
+    
+      
+      <link rel="stylesheet" href="/css/gist.min.a751e8b0abe1ba8bc53ced52a38b19d8950fe78ca29454ea8c2595cf26aad5c0.css">
+    
+      
+      <link rel="stylesheet" href="/css/header.min.b6fb4423cf82a9f9d7abc9cd010223fa3d70a6526a3f28f8e17d814c06e18f9e.css">
+    
+      
+      <link rel="stylesheet" href="/css/main.min.fe8dc560fccb53a458b0db19ccb7b265764ac46b68596b7e099c6793054dd457.css">
+    
+      
+      <link rel="stylesheet" href="/css/menu.min.83637a90d903026bc280d3f82f96ceb06c5fc72b7c1a8d686afb5bbf818a29f7.css">
+    
+      
+      <link rel="stylesheet" href="/css/pagination.min.82f6400eae7c7c6dc3c866733c2ec0579e4089608fea69400ff85b3880aa0d3c.css">
+    
+      
+      <link rel="stylesheet" href="/css/post.min.fc74ca360273c1d828da3c02b8174eba435607b369d98418ccc6f2243cd4e75d.css">
+    
+      
+      <link rel="stylesheet" href="/css/prism.min.9023bbc24533d09e97a51a0a42a5a7bfe4c591ae167c5551fb1d2191d11977c0.css">
+    
+      
+      <link rel="stylesheet" href="/css/syntax.min.cc789ed9377260d7949ea4c18781fc58959a89287210fe4edbff44ebfc1511b6.css">
+    
+      
+      <link rel="stylesheet" href="/css/terminal.min.dd0bf9c7cacb24c1b0184f52f1869b274e06689557468cc7030ccf632328eb97.css">
+    
+      
+      <link rel="stylesheet" href="/css/terms.min.b81791663c3790e738e571cdbf802312390d30e4b1d8dc9d814a5b5454d0ac11.css">
+    
+    
+    
+    
+    
+    
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    
+    <meta name="twitter:card" content="summary">
+    
+      
+        <meta name="twitter:site" content="">
+      
+        <meta name="twitter:creator" content="">
+    
+    
+    
+    <meta property="og:locale" content="en">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Clone a Voice (Open-Source)">
+    <meta property="og:description" content="Here is the video: https://youtu.be/3fg7Ht0DSnE?si=gyqIdakpKI0Qf1Fy
+    What the junk is this? This is the 3rd video in my Home Assistant series. This video picks up where I left off (and where I failed) in my last video attempting to replace Alexa with my own, fully local, AI voice assistant. I did everything but create a custom AI voice, specifically the voice of Terry Crews. In this video, I FINALLY figured out a consistent way to clone a voice from pretty much any source. But it has to be LOCAL and FREE. You can clone my voice I am giving you permission to clone my voice…but not for commercial purposes or for content creation. You are only allowed to use my voice as your personal voice assistant. If you would like to clone my voice, here is the voice dataset: https://drive.google.com/drive/folders/1i6mWm8z2K_3rtanrVn1UcNgw5LQ0Zyv6?usp=sharing What Do You Need? …just a computer. But if you have a GPU….better.
+    ">
+    <meta property="og:url" content="/posts/how-to-clone-a-voice/">
+    <meta property="og:site_name" content="Terminal">
+    
+      <meta property="og:image" content="/og-image.png">
+    
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="627">
+    
+    
+      <meta property="article:published_time" content="2024-11-19 00:00:00 +0000 UTC">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </head>
+    <body cz-shortcut-listen="true">
+    
+    
+    <div class="container">
+    
+      <header class="header">
+      <div class="header__inner">
+        <div class="header__logo">
+          <a href="/">
+      <div class="logo">
+        Terminal
+      </div>
+    </a>
+    
+        </div>
+        
+          <ul class="menu menu--mobile">
+      <li class="menu__trigger">Menu&nbsp;▾</li>
+      <li>
+        <ul class="menu__dropdown">
+          
+            
+              <li><a href="/about">About</a></li>
+            
+          
+            
+              <li><a href="/showcase">Showcase</a></li>
+            
+          
+          
+        </ul>
+      </li>
+    </ul>
+    
+        
+        
+      </div>
+      
+        <nav class="navigation-menu">
+      <ul class="navigation-menu__inner menu--desktop">
+        
+          
+            
+              <li><a href="/about">About</a></li>
+            
+          
+            
+              <li><a href="/showcase">Showcase</a></li>
+            
+          
+          
+        
+      </ul>
+    </nav>
+    
+      
+    </header>
+    
+    
+      <div class="content">
+        
+    <article class="post">
+      <h1 class="post-title">
+        <a href="/posts/how-to-clone-a-voice/">How to Clone a Voice (Open-Source)</a>
+      </h1>
+      <div class="post-meta"><time class="post-date">2024-11-19</time></div>
+    
+      
+        <span class="post-tags">
+          
+          #<a href="/tags/networkchuck/">NetworkChuck</a>&nbsp;
+          
+          #<a href="/tags/tutorial/">tutorial</a>&nbsp;
+          
+        </span>
+      
+      
+    
+    
+      
+    
+      <div class="post-content"><div>
+            <p>Here is the video: <a href="https://youtu.be/3fg7Ht0DSnE?si=gyqIdakpKI0Qf1Fy">https://youtu.be/3fg7Ht0DSnE?si=gyqIdakpKI0Qf1Fy</a></p>
+    <h1 id="what-the-junk-is-this">What the junk is this?<a href="#what-the-junk-is-this" class="hanchor" arialabel="Anchor">#</a> </h1>
+    <ul>
+    <li>This is the 3rd video in my Home Assistant series. This video picks up where I left off (and where I failed) in my last video attempting to replace Alexa with my own, fully local, AI voice assistant.</li>
+    <li>I did everything but create a custom AI voice, specifically the voice of Terry Crews.</li>
+    <li>In this video, I FINALLY figured out a consistent way to clone a voice from pretty much any source. But it has to be LOCAL and FREE.</li>
+    </ul>
+    <h1 id="you-can-clone-my-voice">You can clone my voice<a href="#you-can-clone-my-voice" class="hanchor" arialabel="Anchor">#</a> </h1>
+    <ul>
+    <li>I am giving you permission to clone my voice…but not for commercial purposes or for content creation. You are only allowed to use my voice as your personal voice assistant.</li>
+    <li>If you would like to clone my voice, here is the voice dataset: <a href="https://drive.google.com/drive/folders/1i6mWm8z2K_3rtanrVn1UcNgw5LQ0Zyv6?usp=sharing">https://drive.google.com/drive/folders/1i6mWm8z2K_3rtanrVn1UcNgw5LQ0Zyv6?usp=sharing</a></li>
+    </ul>
+    <h1 id="what-do-you-need">What Do You Need?<a href="#what-do-you-need" class="hanchor" arialabel="Anchor">#</a> </h1>
+    <p>…just a computer. But if you have a GPU….better.</p>
+    <p>Here is what I am using and demonstrating in this video:</p>
+    <ul>
+    <li>Laptop with an Nvidia 3080 GPU</li>
+    <li>Terry (my AI PC that I built in this video —&gt; <a href="https://youtu.be/Wjrdr0NU4Sk?si=_zlFoZq5g3jAcntA">https://youtu.be/Wjrdr0NU4Sk?si=_zlFoZq5g3jAcntA</a>) rocking dual Nvidia 4090s</li>
+    <li>A cloud GPU (AWS EC2 instance)
+    <ul>
+    <li>I used a <em>g5.12xlarge</em> instance (4 GPUs)</li>
+    </ul>
+    </li>
+    </ul>
+    <h1 id="step-1---data-prep">Step 1 - Data Prep<a href="#step-1---data-prep" class="hanchor" arialabel="Anchor">#</a> </h1>
+    <ul>
+    <li>The key to any AI project is getting CLEAN DATA. Let’s do that now.</li>
+    <li>For this tutorial, I’m going to show you two options:
+    <ul>
+    <li>Record <em>your voice</em> using the Piper Recording Studio</li>
+    <li>Pull audio data from YouTube videos</li>
+    </ul>
+    </li>
+    </ul>
+    <h2 id="the-piper-recording-studio">the Piper Recording Studio<a href="#the-piper-recording-studio" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <p>This option is for you if you want to clone your own voice (or someone close to you) and you are willing to sit still for an hour while saying nonsensical phrases to a computer. (Kind of what I do for a living.)</p>
+    <h3 id="what-do-you-need-1">What do you need?<a href="#what-do-you-need-1" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <ul>
+    <li>This will be <em>VERY</em> Linux-based, so you will need Mac, Linux or WSL2 running on Windows.</li>
+    <li>In my demonstration, I’m showing you how to very quickly setup WSL2. (If you have no idea what WSL is but would like to know more….check out this video —-&gt; <a href="https://youtu.be/vxTW22y8zV8?si=FpeB_ZiwrOweGZW">https://youtu.be/vxTW22y8zV8?si=FpeB_ZiwrOweGZW</a>_)</li>
+    </ul>
+    <h3 id="quick-wsl2-setup">Quick WSL2 Setup<a href="#quick-wsl2-setup" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-powershell"><code class=" language-powershell" data-lang="powershell">wsl <span class="token operator">--</span>install Ubuntu<span class="token operator">-</span>22<span class="token punctuation">.</span>04
+    
+    <span class="token comment">## Why Ubuntu 22.04? It was the most stable in my testing.</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="get-some-things-setup">Get some things setup<a href="#get-some-things-setup" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <p>(Linux and WSL2)</p>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Update repos</span>
+    
+    <span class="token function">sudo</span> <span class="token function">apt</span> update
+    
+    <span class="token comment">## Clone the Piper Recording Studio repo from GitHub</span>
+    
+    <span class="token function">git</span> clone https://github.com/rhasspy/piper-recording-studio.git
+    
+    <span class="token comment">## Jump into the directory</span>
+    
+    <span class="token builtin class-name">cd</span> piper-recording-studio
+    
+    <span class="token comment">## Create a Python Virtual Environment</span>
+    
+    python3 -m venv .venv
+    
+    <span class="token comment">## Activate that Python Virtual Environment</span>
+    
+    <span class="token builtin class-name">source</span> .venv/bin/activate
+    
+    <span class="token comment">## Upgrade PIP</span>
+    
+    python3 -m pip <span class="token function">install</span> --upgrade pip
+    
+    <span class="token comment">## Install requirements for this project</span>
+    
+    python3 -m pip <span class="token function">install</span> -r requirements.txt
+    
+    <span class="token comment">## Now RUN the Piper Recording Studio</span>
+    
+    python3 -m piper_recording_studio
+    
+    <span class="token comment">## Hit CTRL-C when you are done.</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="record-some-stuff">Record some stuff<a href="#record-some-stuff" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <ul>
+    <li>Navigate to http://localhost:8000 to access the Web Interface of the Piper Recording Studio and start recording your lovely voice.</li>
+    </ul>
+    <h3 id="prepare-the-stuff-you-recorded">Prepare the stuff you recorded<a href="#prepare-the-stuff-you-recorded" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Jump into the directory where your recordings live</span>
+    
+    <span class="token builtin class-name">cd</span> output/en_US/nameofyourrecordingstuff.chat
+    
+    <span class="token comment">## Install ffmpeg</span>
+    
+    <span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> ffmpeg
+    
+    <span class="token comment">## Jump back to the piper_recording_studo directory and export your data</span>
+    
+    <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/
+    
+    python3 -m export_dataset ~/path/to/your/recorded/files ~/your/output/directory
+    
+    <span class="token comment">## Deactivate your virtual environment</span>
+    
+    deactivate
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h2 id="youtube-videos">YouTube Videos<a href="#youtube-videos" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <h3 id="download-youtube-videos">Download YouTube Videos<a href="#download-youtube-videos" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Make a new directory for this data prep and jump in there</span>
+    
+    <span class="token function">mkdir</span> dataprep
+    <span class="token builtin class-name">cd</span> dataprep
+    
+    <span class="token comment">## Create a new python virtual environment and activate it</span>
+    
+    python3 -m venv .venv
+    <span class="token builtin class-name">source</span> .venv/bin/activate
+    
+    <span class="token comment">## Install YT-DLP to download YouTube Videos</span>
+    
+    pip <span class="token function">install</span> yt-dlp
+    
+    <span class="token comment">## Download the audio from a YouTube video</span>
+    
+    yt-dlp -x --audio-format wav <span class="token string">"youtube URL"</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="cleanup-your-audio-samples">Cleanup your audio samples<a href="#cleanup-your-audio-samples" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <ul>
+    <li>Piper TTS will want audio samples between 5-15sec. Any larger and it will hate you.</li>
+    </ul>
+    <h4 id="use-audacity-to-trim-clipsetc">Use Audacity to trim clips..etc<a href="#use-audacity-to-trim-clipsetc" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <ul>
+    <li>Audacity (free and open-source audio tool): <a href="https://www.audacityteam.org/">https://www.audacityteam.org/</a></li>
+    <li>When exporting with Audacity (or any other program) Piper is wanting the audio in this format:
+    <ul>
+    <li>!<img alt="Image Description" src="/images/Pasted%20image%2020241119100549.png"></li>
+    <li>Sample Rate: 22050 Hz</li>
+    <li>Encoding: Signed 16-bit PCM</li>
+    <li>Channels: mono</li>
+    <li>Format: wav</li>
+    </ul>
+    </li>
+    </ul>
+    <h4 id="remove-silence">Remove Silence<a href="#remove-silence" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token keyword keyword-for">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword keyword-in">in</span> ./*.wav<span class="token punctuation">;</span> <span class="token keyword keyword-do">do</span>
+        ffmpeg -i <span class="token string">"<span class="token variable">$file</span>"</span> -af <span class="token string">"silenceremove=stop_periods=-1:stop_duration=3:stop_threshold=-20dB"</span> <span class="token string">"./<span class="token variable">${file<span class="token operator">%</span>.wav}</span>_nosilence.wav"</span>
+    <span class="token keyword keyword-done">done</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h4 id="cut-up-your-files">Cut up your files<a href="#cut-up-your-files" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Create another directory</span>
+    
+    <span class="token function">mkdir</span> wav
+    
+    <span class="token comment">## Cut it up </span>
+    
+    <span class="token keyword keyword-for">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword keyword-in">in</span> *.wav<span class="token punctuation">;</span> <span class="token keyword keyword-do">do</span>
+      ffmpeg -i <span class="token string">"<span class="token variable">$file</span>"</span> -f segment -segment_time <span class="token number">15</span> -c copy <span class="token string">"./wav/split_<span class="token variable">${file<span class="token operator">%</span>.*}</span>_%03d.wav"</span>
+    <span class="token keyword keyword-done">done</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="get-your-samples-ready-for-piper-tts">Get your samples ready for Piper TTS<a href="#get-your-samples-ready-for-piper-tts" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <h4 id="transcribe-your-audio-samples-with-whisper">Transcribe your audio samples with Whisper<a href="#transcribe-your-audio-samples-with-whisper" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <h5 id="install-whisper">Install Whisper<a href="#install-whisper" class="hanchor" arialabel="Anchor">#</a> </h5>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash">pip <span class="token function">install</span> git+https://github.com/openai/whisper.git
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h5 id="create-a-new-python-script-and-run-it">Create a new python script and run it<a href="#create-a-new-python-script-and-run-it" class="hanchor" arialabel="Anchor">#</a> </h5>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token function">nano</span> whispersomethingtome.py
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><p>Paste this script</p>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-python"><code class=" language-python" data-lang="python"><span class="token keyword keyword-import">import</span> os
+    <span class="token keyword keyword-import">import</span> whisper
+    
+    <span class="token comment"># Initialize Whisper model (you can choose between 'tiny', 'base', 'small', 'medium', 'large')</span>
+    model <span class="token operator">=</span> whisper<span class="token punctuation">.</span>load_model<span class="token punctuation">(</span><span class="token string">"base"</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># Path to the directory containing the audio files</span>
+    audio_dir <span class="token operator">=</span> <span class="token string">"./wav"</span>
+    output_csv <span class="token operator">=</span> <span class="token string">"./metadata.csv"</span>
+    
+    <span class="token comment"># List all .wav files in the directory</span>
+    audio_files <span class="token operator">=</span> <span class="token punctuation">[</span>f <span class="token keyword keyword-for">for</span> f <span class="token keyword keyword-in">in</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>audio_dir<span class="token punctuation">)</span> <span class="token keyword keyword-if">if</span> f<span class="token punctuation">.</span>endswith<span class="token punctuation">(</span><span class="token string">".wav"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    audio_files<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Sort the files alphabetically (optional)</span>
+    
+    <span class="token comment"># Open the CSV file for writing</span>
+    <span class="token keyword keyword-with">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output_csv<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword keyword-for">for</span> audio_file <span class="token keyword keyword-in">in</span> audio_files<span class="token punctuation">:</span>
+            <span class="token comment"># Full path to the audio file</span>
+            audio_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>audio_dir<span class="token punctuation">,</span> audio_file<span class="token punctuation">)</span>
+    
+            <span class="token comment"># Transcribe the audio file</span>
+            result <span class="token operator">=</span> model<span class="token punctuation">.</span>transcribe<span class="token punctuation">(</span>audio_path<span class="token punctuation">)</span>
+    
+            <span class="token comment"># Extract the transcription text</span>
+            transcription <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token string">"text"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+            <span class="token comment"># Write the filename (without .wav extension) and transcription to the CSV</span>
+            file_id <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>splitext<span class="token punctuation">(</span>audio_file<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment"># Get file name without extension</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>file_id<span class="token punctuation">}</span></span><span class="token string">|</span><span class="token interpolation"><span class="token punctuation">{</span>transcription<span class="token punctuation">}</span></span><span class="token string">\n"</span></span><span class="token punctuation">)</span>
+    
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Transcriptions complete! Metadata saved to </span><span class="token interpolation"><span class="token punctuation">{</span>output_csv<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><p>Run the script</p>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash">python3 whispersomethingtome.py
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><p>Clean it up</p>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Deactivate your python virtual environment</span>
+    
+    deactivate
+    
+    <span class="token comment">## Go back home</span>
+    
+    <span class="token builtin class-name">cd</span> ~/
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h2 id="prepare-to-train-piper-recording-studio-and-youtube">Prepare to Train (Piper Recording Studio and YouTube)<a href="#prepare-to-train-piper-recording-studio-and-youtube" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <h3 id="prep-your-training-environment">Prep Your Training Environment<a href="#prep-your-training-environment" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Make a new directory for training</span>
+    
+    <span class="token function">mkdir</span> training
+    <span class="token builtin class-name">cd</span> training
+    
+    <span class="token comment">## Clone the Piper Repo</span>
+    
+    <span class="token function">git</span> clone https://github.com/rhasspy/piper.git
+    
+    <span class="token comment">## Create another python virtual environment and activate it</span>
+    
+    python3 -m venv .venv
+    <span class="token builtin class-name">source</span> .venv/bin/activate
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h4 id="solving-your-headaches">Solving your headaches<a href="#solving-your-headaches" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <p><em>Because Piper TTS is picky</em></p>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Install a VERY specific version of PIP</span>
+    
+    python3 -m pip <span class="token function">install</span> <span class="token assign-left variable">pip</span><span class="token operator">==</span><span class="token number">23.3</span>.1
+    
+    <span class="token comment">## Install a VERY specific version of numpy</span>
+    
+    pip <span class="token function">install</span> <span class="token assign-left variable">numpy</span><span class="token operator">==</span><span class="token number">1.24</span>.4
+    
+    <span class="token comment">## Install a VERY specific version of torchmetrics</span>
+    
+    pip <span class="token function">install</span> <span class="token assign-left variable">torchmetrics</span><span class="token operator">==</span><span class="token number">0.11</span>.4
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h4 id="more-prep">More prep<a href="#more-prep" class="hanchor" arialabel="Anchor">#</a> </h4>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Jump into the Piper directory</span>
+    
+    <span class="token builtin class-name">cd</span> piper/src/python
+    
+    <span class="token comment">## If you have a 4090...this will save you ---&gt; https://github.com/rhasspy/piper/issues/295</span>
+    
+    <span class="token comment">## Setup wheel</span>
+    
+    python3 -m pip <span class="token function">install</span> --upgrade wheel setuptools
+    
+    <span class="token comment">## Install requirements</span>
+    
+    pip3 <span class="token function">install</span> -e <span class="token builtin class-name">.</span>
+    
+    <span class="token comment">## Run this script (I don't know what it does...but piper needs it)</span>
+    
+    ./build_monotonic_align.sh
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="make-piper-love-your-data">Make Piper LOVE your data<a href="#make-piper-love-your-data" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## This will process your dataset, getting it ready for Piper to train</span>
+    
+    python3 -m piper_train.preprocess <span class="token punctuation">\</span>
+      --language en <span class="token punctuation">\</span>
+      --input-dir ~/your_training_data_directory/ <span class="token punctuation">\</span>
+      --output-dir ~/your_output_directory <span class="token punctuation">\</span>
+      --dataset-format ljspeech <span class="token punctuation">\</span>
+      --single-speaker <span class="token punctuation">\</span>
+      --sample-rate <span class="token number">22050</span>
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h3 id="download-a-starting-point">Download a starting point<a href="#download-a-starting-point" class="hanchor" arialabel="Anchor">#</a> </h3>
+    <ul>
+    <li>You DON’T want to start training from scratch. We will download a pre-trained model that already has a headstart.</li>
+    <li>Download High, Medium, or Low…depending on what you want —&gt; <a href="https://huggingface.co/datasets/rhasspy/piper-checkpoints/tree/main/en/en_US/lessac">https://huggingface.co/datasets/rhasspy/piper-checkpoints/tree/main/en/en_US/lessac</a></li>
+    </ul>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Downloading the Lessac (medium) checkpoint</span>
+    
+    <span class="token function">wget</span> https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/lessac/medium/epoch%3D2164-step%3D1355540.ckpt
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h1 id="step-2---time-to-train">Step 2 - Time to TRAIN!!!<a href="#step-2---time-to-train" class="hanchor" arialabel="Anchor">#</a> </h1>
+    <ul>
+    <li>Picking up from step 1, we are going to copy and paste this command.</li>
+    </ul>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash">python3 -m piper_train <span class="token punctuation">\</span>
+        --dataset-dir ~/your_training_data_directory <span class="token punctuation">\</span>
+        --accelerator <span class="token string">'gpu'</span> <span class="token punctuation">\</span>
+        --gpus <span class="token number">1</span> <span class="token punctuation">\</span>
+        --batch-size <span class="token number">32</span> <span class="token punctuation">\</span>
+        --validation-split <span class="token number">0.0</span> <span class="token punctuation">\</span>
+        --num-test-examples <span class="token number">0</span> <span class="token punctuation">\</span>
+        --max_epochs <span class="token number">6000</span> <span class="token punctuation">\</span>
+        --resume_from_checkpoint <span class="token string">"/place/where/you/downloaded/thecheckpoint/epoch=2218-step=838782.ckpt"</span> <span class="token punctuation">\</span>
+        --checkpoint-epochs <span class="token number">1</span> <span class="token punctuation">\</span>
+        --precision <span class="token number">16</span> <span class="token punctuation">\</span>
+        --max-phoneme-ids <span class="token number">400</span> <span class="token punctuation">\</span>
+        --quality medium 
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><ul>
+    <li>If you have DUAL GPUs, this script has a few fun things</li>
+    </ul>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash">
+    python3 -m piper_train <span class="token punctuation">\</span>
+        --dataset-dir ~/new_chuck/train-me <span class="token punctuation">\</span>
+        --accelerator <span class="token string">'gpu'</span> <span class="token punctuation">\</span>
+        --gpus <span class="token number">2</span> <span class="token punctuation">\</span>
+        --batch-size <span class="token number">32</span> <span class="token punctuation">\</span>
+        --validation-split <span class="token number">0.0</span> <span class="token punctuation">\</span>
+        --num-test-examples <span class="token number">0</span> <span class="token punctuation">\</span>
+        --max_epochs <span class="token number">6000</span> <span class="token punctuation">\</span>
+        --resume_from_checkpoint <span class="token string">"/home/networkchuck/piper_project/base_checkpoints/high/epoch=2218-step=838782.ckpt"</span> <span class="token punctuation">\</span>
+        --checkpoint-epochs <span class="token number">1</span> <span class="token punctuation">\</span>
+        --precision <span class="token number">16</span> <span class="token punctuation">\</span>
+        --max-phoneme-ids <span class="token number">400</span> <span class="token punctuation">\</span>
+        --quality high <span class="token punctuation">\</span>
+        --strategy ddp
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h2 id="stoping-and-resuming">Stoping and Resuming<a href="#stoping-and-resuming" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <ul>
+    <li>You can interrupt training and pickup where you left off.</li>
+    <li>Just hit ctrl-c</li>
+    <li>When you are ready to resume training, run the same command but change the checkpoint file to YOUR most recent checkpoint file. You would have seen this in the output of your training process.</li>
+    </ul>
+    <p>!<img alt="Image Description" src="/images/Pasted%20image%2020241119103618.png"></p>
+    <h2 id="when-your-final-epoch-is-reached">When your final epoch is reached<a href="#when-your-final-epoch-is-reached" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <ul>
+    <li>It’s time to export your voice when training is done. Also know that you can export your voice at ANY point in training by simply targeting the most recent checkpoint file.</li>
+    </ul>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Export the model</span>
+    
+    python3 -m piper_train.export_onnx <span class="token punctuation">\</span>
+        <span class="token string">"/path/to/your/checkpoint/checkpoints/epoch=5999-step=853906.ckpt"</span> <span class="token punctuation">\</span>
+        ~/output/directory/voicename.onnx
+    
+    <span class="token comment">## Copy the training json file to your model file directory</span>
+    
+    <span class="token function">cp</span> ~/training_directory/config.json ~/output/directory/voicename.onnx.json
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div><h2 id="lets-test">Let’s test<a href="#lets-test" class="hanchor" arialabel="Anchor">#</a> </h2>
+    <div class="highlight"><div class="code-toolbar"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;" class=" language-bash"><code class=" language-bash" data-lang="bash"><span class="token comment">## Make sure you have Piper TTS installed</span>
+    
+    pip <span class="token function">install</span> piper-tts
+    
+    <span class="token comment">## Test your voice</span>
+    
+    <span class="token builtin class-name">echo</span> <span class="token string">"Subscribe to NetworkChuck"</span> <span class="token operator">|</span> piper -m voicename.onnx --output_file test.wav
+    </code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></div>
+          </div></div>
+    
+      
+        
+    <div class="pagination">
+      <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr>
+      </div>
+      <div class="pagination__buttons">
+        
+          <a href="/posts/the-future-of-ai-and-what-it-means-for-us---blog/" class="button inline prev">
+            Some Raw Thoughts on AI
+          </a>
+        
+        
+          ::
+        
+        
+          <a href="/posts/a-new-post/" class="button inline next">
+            Just a test
+          </a>
+        
+      </div>
+    </div>
+    
+    
+      
+    
+      
+        
+    
+      
+    </article>
+    
+      </div>
+    
+      
+        <footer class="footer">
+      <div class="footer__inner">
+        
+          <div class="copyright">
+            <span>© 2025 Powered by <a href="https://gohugo.io">Hugo</a></span>
+        
+          <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+          </div>
+      </div>
+    </footer>
+    
+    
+    
+    
+    
+    
+    <script type="text/javascript" src="/bundle.min.js"></script>
+    
+    
+    
+    
+    
+      
+    </div>
+    
+    
+    
+    <veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen><veepn-guard-alert><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-guard-alert></body></html>
