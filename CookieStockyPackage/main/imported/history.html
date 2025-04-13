@@ -1,0 +1,240 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CookieMovie - 📺Your Watch History</title>
+    <link rel="icon" type="image/x-icon" href="/main/assets/site/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="/main/css/profile.css" rel="stylesheet" />
+    <link href="/main/assets/videos/preview.css" rel="stylesheet" />
+    <script src="/main/assets/videos/preview.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/568e059819.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-[#2e2e2e] text-white">
+    <div class="flex flex-col">
+        <!-- Mobile Header -->
+        <div class="mobile-header w-full p-1 md:hidden">
+            <div id="versionLink">Version is fetching...</div>
+            <div class="flex items-center text-xl font-bold">
+                CookieMovie
+                <div class="bg-green-500 p-2 rounded-full ml-2">
+                    <i class="fas fa-cookie text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu md:hidden" id="mobileMenu">
+        <div class="flex items-center text-xl font-bold mb-4">
+            <button class="bg-white rounded-full p-2 mr-2" id="closeMobileMenu">
+                <i class="fas fa-times text-black"></i>
+            </button>
+            <div class="bg-green-500 p-2 rounded-full mr-2">
+                <i class="fas fa-cookie text-white"></i>
+            </div>
+            CookieMovie
+        </div>
+        <a href="index.html" class="text-green-500 font-bold">
+            Home
+        </a>
+        <a href="videos.html" class="text-green-500 font-bold">
+            Collection
+        </a>
+        <a href="lib.html" class="text-green-500 font-bold">
+            Library
+        </a>
+        <a href="notes.html" class="text-green-500 font-bold">
+            Notes
+        </a>
+        <div style="height: 2px; background-color: #ffffff; width: 86%; margin: 20px 0;"></div>
+        <a href="/main/radio/live.html" class="text-green-500 font-bold">
+            🔴Live Radio
+        </a>
+    </div>
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/4 md:w-1/5 lg:w-1/6 max-w-xs bg-[#1c1c1c] p-5 sidebar overflow-hidden">
+            <div class="flex items-center mb-10">
+                <button class="button-87" onclick="window.location.href='/main/index.html'">
+                    <div class="bg-green-500 p-2 rounded-full">
+                        <i class="fas fa-cookie text-white"></i>
+                    </div>
+                    <span class="ml-3 text-xl font-bold">
+                        CookieMovie
+                    </span>
+                </button>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <div class="w-full md:w-3/7 pr-1 mx-auto flex flex-col"> <!-- Centering the content -->
+                        <hr class="border-gray-600" />
+                        <br>
+                        <button class="button-22 text-gray-400" role="button"
+                            onclick="window.location.href='/main/index.html'"><i class="fas fa-home"></i>
+                            <span class="ml-3">Home</span></button>
+                        <br>
+                        <button class="button-22 text-gray-400" role="button"
+                            onclick="window.location.href='/main/videos.html'"> <i class="fas fa-video"></i>
+                            <span class="ml-3">Collection</span></button>
+                        <br>
+                        <button class="button-22 text-gray-400" role="button"
+                            onclick="window.location.href='/main/lib.html'"><i class="fas fa-book"></i>
+                            <span class="ml-3">Library</span></button>
+                        <br>
+                        <hr class="border-gray-600" />
+                        <br>
+                        <h2 class="text-2xl font-bold mb-2 text-[#1095fc] text-center">
+                            Audio
+                        </h2>
+                        <div class="w-full md:w-3/7 pr-1 mx-auto flex flex-col"> <!-- Centering the content -->
+                            <button class="button-36 text-green-400" role="button"
+                                onclick="window.location.href='/main/music.html'"><i class="fa-solid fa-music"></i>
+                                <span class="ml-3">Music</span></button>
+                            </li><br>
+                            <hr class="border-gray-600" /><br>
+                            <button class="button-22 text-gray-400" role="button"
+                                onclick="window.location.href='/main/vyse/'"><i class="fas fa-photo-film"></i>
+                                <span class="ml-3">VysePic Beta</span></button>
+                            <br>
+                </ul>
+            </nav>
+            <div class="mt-10">
+                <ul class="space-y-4">
+                    <li class="flex items-center text-gray-400 cursor-pointer">
+                        <i class="fas fa-question-circle">
+                        </i>
+                        <div id="versionDisplay">Site Version: fetching...</div>
+                    </li>
+                    <div>
+                        You are logged in as:
+                        <div id="email" class="mb-4 text-green-400"></div>
+                    </div>
+                    <div id="patch-notes-container"></div>
+                    <script>
+                        fetch('/main/patch-notes.html')
+                            .then(res => res.text())
+                            .then(data => document.getElementById('patch-notes-container').innerHTML = data);
+                    </script>
+
+
+                </ul>
+            </div>
+        </div>
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/669a1a04becc2fed69277655/1i34vb8um';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
+        <!-- Main Content -->
+        <div class="w-full md:w-4/5 p-5">
+            <div class="flex justify-between items-center mb-2">
+                <div>
+                    <div class="button-container">
+                        <div class="nav-dropdown">
+                            <button class="button-33 nav-dropbtn"
+                                onclick="navFunction('navDropdown')">Navigation</button>
+                            <div id="navDropdown" class="nav-dropdown-content">
+                                <a href="/main/">Home</a>
+                                <a href="/main/videos.html">Videos</a>
+                                <a href="/main/vyse/">VysePic</a>
+                                <a href="/main/music.html">Music</a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="button-33 dropbtn" onclick="myFunction('myDropdown')">More</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <br>
+                                <a href="/main/assets/site/Privacy-Policy.html">Privacy Policy</a>
+                                <a href="/main/assets/site/Terms-of-Service.html">Terms of Service</a>
+                                <a href="/main/assets/site/Terms-of-Use.html">Terms of Use</a>
+                                <a href="/main/assets/site/Security-Information-and-Age-Restrictions.html">Security</a>
+                                <a href="/main/assets/site/Data-Protection-Compliance.html">Data Protection
+                                    Compliance</a>
+                                <a href="/main/assets/site/report.html">Report</a>
+                            </div>
+                        </div>
+                        <!-- Clear History Button -->
+                        <button class="button-22" id="clearHistoryButton">Clear All History</button>
+
+                        <!-- Confirmation Modal -->
+                        <div id="confirmationModal" style="display:none;">
+                            <p>Are you sure you want to clear your history? This cannot be undone!</p>
+                            <button id="confirmDeleteButton">Delete</button>
+                            <button id="cancelButton">Cancel</button>
+                        </div>
+                    </div>
+
+                    <style>
+                        #confirmationModal {
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            background-color: rgb(138, 172, 119);
+                            padding: 20px;
+                            border: 1px solid #ffb13d;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            z-index: 1000;
+                        }
+
+                        #confirmationModal p {
+                            margin-bottom: 20px;
+                        }
+
+                        #confirmationModal button {
+                            margin-right: 10px;
+                        }
+                    </style>
+
+                    <script src="/main/assets/site/info.dropdown.js"></script>
+                    <link rel="stylesheet" href="/main/assets/site/info.dropdown.css">
+                </div>
+            </div>
+
+
+            <div class="border-b-2 border-[262626] mb-6"></div>
+            <h1 class="text-2xl font-bold mb-4">Your Watch History</h1>
+            <br>
+            <div class="container mx-auto p-4">
+                <div id="historyContainer"></div> <!-- Display watch history here -->
+            </div>
+            <script type="module" src="/main/history.js"></script> <!-- Adjust the path to your JS file -->
+        </div>
+    </div>
+    </div>
+    <!-- Links -->
+    <style>
+        .history-item {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .history-item:hover {
+            transform: scale(1.02);
+        }
+    </style>
+
+
+    <style>
+        h1 {
+            font-size: 35px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        h3 {
+            font-size: 21px;
+        }
+    </style>
