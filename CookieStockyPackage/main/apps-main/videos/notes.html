@@ -1,0 +1,411 @@
+<html lang="en">
+ <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/duotone.min.css"> <!-- Duotone icons -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+    CookieMovie - 📺Videos
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body {
+            overflow-x: hidden; /* Hides horizontal scrollbar */
+            touch-action: pan-y; /* Prevent horizontal touch scrolling */
+            font-family: 'Roboto', sans-serif;
+        }
+    .video-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .video-popup iframe {
+        width: 80%;
+        height: 80%;
+    }
+    .video-popup .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 50%;
+    }
+    .trending-title {
+        color: #FFD700;
+        text-shadow: 0 0 10px #FFD700;
+    }
+    .trending-thumbnail {
+        filter: brightness(0.7);
+    }
+    .notification-popup {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 50;
+        width: 300px;
+        background: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .notification-popup ul {
+        list-style: none;
+        padding: 10px;
+    }
+    .notification-popup ul li {
+        padding: 10px;
+        border-bottom: 1px solid #ffffff;
+        color: #cbd5e0;
+    }
+    .notification-popup ul li:last-child {
+        border-bottom: none;
+    }
+    .notification-popup .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 50%;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #1c1c1c;
+        }
+        .mobile-header .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: #1c1c1c;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+        .mobile-menu a {
+            padding: 10px;
+            color: #cbd5e0;
+            text-decoration: none;
+        }
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+        }
+    }
+    .redirect-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #262626; /* Background color */
+        color: white; /* Text color */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 16px; /* Font size */
+    }
+    .redirect-button i {
+        font-size: 1rem; /* Icon size */
+    }
+  </style>
+ </head>
+ <body class="bg-[#2e2e2e] text-white">
+  <div class="flex flex-col">
+    <!-- Mobile Header -->
+   <div class="mobile-header w-full p-5 md:hidden">
+    <div class="flex items-center text-xl font-bold">
+        CookieMovie
+        <div class="bg-green-500 p-2 rounded-full ml-2">
+            <i class="fas fa-cookie text-white"></i>
+        </div>
+    </div>
+    <button class="redirect-button" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-rotate-left"></i>
+    </button>
+   </div>
+   </div>
+   <div class="mobile-menu md:hidden" id="mobileMenu">
+    <div class="flex items-center text-xl font-bold mb-4"> 
+        <button class="bg-white rounded-full p-2 mr-2" id="closeMobileMenu">
+            <i class="fas fa-times text-black"></i>
+        </button>
+        <div class="bg-green-500 p-2 rounded-full mr-2">
+            <i class="fas fa-cookie text-white"></i>
+        </div>
+        CookieMovie
+    </div>
+    <a href="index.html" class="text-green-500 font-bold">
+        Home
+    </a>
+    <a href="videos.html" class="text-green-500 font-bold">
+        Collection
+    </a>
+    <a href="lib.html" class="text-green-500 font-bold">
+        🔒Library
+    </a>
+    <a href="notes.html" class="text-green-500 font-bold">
+        Notes
+    </a>
+    <div style="height: 2px; background-color: #ffffff; width: 86%; margin: 20px 0;"></div>
+    <a href="#">
+        Coming Soon
+       </a>
+    <a href="#">
+      Development Version: 3.7.7.7
+    </a>
+   </div>
+   <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-1/5 bg-[1c1c1c] h-screen p-5 sidebar">
+     <div class="flex items-center mb-10">
+      <div class="bg-green-500 p-2 rounded-full">
+       <i class="fas fa-cookie text-white">
+       </i>
+      </div>
+      <span class="ml-3 text-xl font-bold">
+       CookieMovie
+      </span>
+     </div>
+     <nav>
+      <ul class="space-y-4">
+        <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='index.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-home"></i>
+            <span class="ml-3">Home</span>
+        </li>
+        <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='videos.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-video"></i>
+            <span class="ml-3">Collection</span>
+        </li>
+        <li class="flex items-center text-gray-400 cursor-pointer mb-4" onclick="window.location.href='lib.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-book"></i>
+            <span class="ml-3">🔒Library</span>
+        </li>
+           <hr class="border-gray-600"/>
+           <li class="flex items-center text-green-400 cursor-pointer mb-4" onclick="window.location.href='notes.html'"> <!-- Adjust margin as needed -->
+            <i class="fas fa-sticky-note"></i>
+            <span class="ml-3">Notes</span>
+        </li>
+        <hr class="border-gray-600"/>
+        <li class="flex items-center text-gray-400 cursor-pointer">
+            <i class="fas fa-clock">
+            </i>
+            <span class="ml-3">
+             Coming Soon
+            </span>
+           </li>
+      </ul>
+     </nav>
+     <div class="mt-10">
+      <ul class="space-y-4">
+       <li class="flex items-center text-gray-400 cursor-pointer">
+        <i class="fas fa-question-circle">
+        </i>
+        <span class="ml-3">
+         Development Version: 3.7.7.7
+        </span>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- Main Content -->
+    <div class="w-full md:w-4/5 p-5">
+    <div class="flex bg-[1a1a1a] text-gray-300 p-6 rounded-lg shadow-lg">
+        <div class="w-full md:w-3/4 pr-5 mx-auto flex flex-col items-center"> <!-- Centering the content -->
+            <h2 class="text-2xl font-bold mb-5 text-gray-100 border-b border-gray-700 pb-2 text-center">
+                Update Notes
+            </h2>
+            <style>
+                @keyframes glow1 {
+                    0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); } /* Red */
+                    25% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.7); } /* Orange */
+                    50% { box-shadow: 0 0 10px rgba(255, 255, 0, 0.7); } /* Yellow */
+                    75% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); } /* Green */
+                }
+        
+                @keyframes glow2 {
+                    0%, 100% { box-shadow: 0 0 10px rgba(0, 0, 255, 0.7); } /* Blue */
+                    25% { box-shadow: 0 0 10px rgba(75, 0, 130, 0.7); } /* Indigo */
+                    50% { box-shadow: 0 0 10px rgba(238, 130, 238, 0.7); } /* Violet */
+                    75% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); } /* Cyan */
+                }
+        
+                @keyframes glow3 {
+                    0%, 100% { box-shadow: 0 0 10px rgba(255, 20, 147, 0.7); } /* Deep Pink */
+                    25% { box-shadow: 0 0 10px rgba(255, 105, 180, 0.7); } /* Hot Pink */
+                    50% { box-shadow: 0 0 10px rgba(255, 192, 203, 0.7); } /* Pink */
+                    75% { box-shadow: 0 0 10px rgba(255, 0, 255, 0.7); } /* Magenta */
+                }
+
+                @keyframes glow4 {
+                    0%, 100% { box-shadow: 0 0 10px rgba(184, 255, 20, 0.7); } /* Deep Pink */
+                    25% { box-shadow: 0 0 10px rgba(255, 203, 105, 0.7); } /* Hot Pink */
+                    50% { box-shadow: 0 0 10px rgba(108, 78, 189, 0.7); } /* Pink */
+                    75% { box-shadow: 0 0 10px rgba(70, 211, 211, 0.7); } /* Magenta */
+                }
+        
+                .glow1 {
+                    animation: glow1 3s infinite alternate;
+                }
+        
+                .glow2 {
+                    animation: glow2 3s infinite alternate;
+                }
+        
+                .glow3 {
+                    animation: glow3 3s infinite alternate;
+                }
+
+                .glow4 {
+                    animation: glow4 3s infinite alternate;
+                }
+            </style>
+        
+            <ul class="list-none space-y-4 text-center"> <!-- Centered list items -->
+                <li class="flex items-start justify-center bg-[262626] p-4 rounded-lg shadow-md glow1">
+                    <div class="mr-2">🌑</div>
+                    <div>We updated and improved the site with new features and dark design.🕶️</div>
+                </li>
+                <li class="flex items-start justify-center bg-[262626] p-4 rounded-lg shadow-md glow2">
+                    <div class="mr-2">📱</div>
+                    <div>The site is now responsive and works on mobile devices without any issues.</div>
+                </li>
+                <li class="flex items-start justify-center bg-[262626] p-4 rounded-lg shadow-md glow3">
+                    <div class="mr-2">📺</div>
+                    <div>We uploaded some of our best videos for you to watch.</div>
+                </li>
+                <li class="flex items-start justify-center bg-[262626] p-4 rounded-lg shadow-md glow4">
+                    <div class="mr-2">📚</div>
+                    <div>We are working on a new page - Library, where you can find all our resources.</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+   </div>
+  </div>
+  <div class="video-popup flex" style="display: none;">
+    <button class="close-btn">
+        <i class="fas fa-times text-black"></i>
+    </button>
+   <iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+   </iframe>
+  </div>
+  <script>
+   document.getElementById('searchInput').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        const videoItems = document.querySelectorAll('.video-item');
+        
+        videoItems.forEach(function(item) {
+            const title = item.getAttribute('data-title').toLowerCase();
+            if (title.includes(searchQuery)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    document.querySelectorAll('.video-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const videoUrl = this.getAttribute('data-video');
+            const popup = document.querySelector('.video-popup');
+            const iframe = popup.querySelector('iframe');
+            iframe.src = videoUrl;
+            popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelectorAll('.watch-now-btn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const videoUrl = this.getAttribute('data-video');
+            const popup = document.querySelector('.video-popup');
+            const iframe = popup.querySelector('iframe');
+            iframe.src = videoUrl;
+            popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelector('.video-popup .close-btn').addEventListener('click', function() {
+        const popup = document.querySelector('.video-popup');
+        const iframe = popup.querySelector('iframe');
+        iframe.src = '';
+        popup.style.display = 'none';
+    });
+
+    document.getElementById('notificationButton').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        if (notificationPopup.style.display === 'none' || notificationPopup.style.display === '') {
+            notificationPopup.style.display = 'block';
+        } else {
+            notificationPopup.style.display = 'none';
+        }
+    });
+
+    document.getElementById('notificationButton1').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        if (notificationPopup.style.display === 'none' || notificationPopup.style.display === '') {
+            notificationPopup.style.display = 'block';
+        } else {
+            notificationPopup.style.display = 'none';
+        }
+    });
+
+    document.getElementById('closeNotificationPopup').addEventListener('click', function() {
+        const notificationPopup = document.getElementById('notificationPopup');
+        notificationPopup.style.display = 'none';
+    });
+
+    document.getElementById('menuIcon').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
+            mobileMenu.style.display = 'flex';
+        } else {
+            mobileMenu.style.display = 'none';
+        }
+    });
+
+    document.getElementById('closeMobileMenu').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.style.display = 'none';
+    });
+  </script>
+ </body>
+</html>
